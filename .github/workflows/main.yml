@@ -3,8 +3,8 @@ name: Run links.py Script
 on:
   push:
     branches:
-      - main  # Run the workflow when changes are pushed to the main branch
-  workflow_dispatch:  # Allows manual triggering of the workflow
+      - main
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -17,12 +17,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'  # Use the latest 3.x version of Python
+          python-version: '3.x'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install requests beautifulsoup4
+          pip install requests beautifulsoup4 pymongo
 
       - name: Run links.py
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL }}  # Access MongoDB Atlas URL
         run: python links.py
