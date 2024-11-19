@@ -1,30 +1,35 @@
-name: Run links.py Script
+name: Run final_script.py on Push
 
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Or any branch you want to trigger the workflow
 
 jobs:
   run-script:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+    - name: Set up Python environment
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'  # Specify the Python version you want
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests beautifulsoup4 pymongo
+    - name: Install ffmpeg
+      run: |
+        sudo apt update
+        sudo apt install -y ffmpeg  # Install ffmpeg
 
-      - name: Run links.py
-        env:
-          MONGO_URL: ${{ secrets.MONGO_URL }}  # Access MongoDB Atlas URL
-        run: python links.py
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install dropbox selenium
+
+    - name: Run final_script.py
+      env:
+        DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}  # Use the GitHub Secret for Dropbox token
+      run: |
+        python final_script.py
