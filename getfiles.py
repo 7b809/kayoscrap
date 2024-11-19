@@ -4,7 +4,8 @@ import re
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-import subprocess
+from selenium.webdriver.chrome.service import Service  # Import the Service class
+from webdriver_manager.chrome import ChromeDriverManager  # To automatically handle chromedriver
 
 # Set up Chrome options for headless mode and to handle downloads
 options = Options()
@@ -16,9 +17,6 @@ options.add_experimental_option("prefs", {
     "download.prompt_for_download": False,  # Disable download prompt
     "directory_upgrade": True
 })
-
-# Specify the path to your chromedriver
-chromedriver_path = "chromedriver"  # Update this path to the actual location of chromedriver
 
 # Function to convert size string like '302M' or '5G' to bytes
 def convert_size_to_bytes(size_str):
@@ -37,8 +35,8 @@ def convert_size_to_bytes(size_str):
 
 # Function to download file from Google Drive
 def download_file_from_drive(url):
-    # Set the path to chromedriver explicitly
-    driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+    # Set up the Chrome driver using the Service class and webdriver-manager to handle the driver
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     downloaded_file_name = None
     
     try:
