@@ -68,13 +68,11 @@ def main(drive_url):
 
 if __name__ == "__main__":
     # Fetch the link from MongoDB where new_links = True and exit_flag = False
-    link_doc = links_collection.find_one({"exit_flag": False, "new_links": True})
-    
-    if link_doc:
-        drive_url = link_doc['link']  # Extract the drive URL from the document
-        print(f"Processing link: {drive_url}")
+    link_doc = links_collection.find_one()  # Assuming you want the first document
+
+    drive_url = link_doc['link']  # Extract the drive URL from the document
+    print(f"Processing link: {drive_url}")
         
-        # Call the main function with the fetched drive URL
-        main(drive_url)
-    else:
-        print("No new links available for processing.")
+    # Call the main function with the fetched drive URL
+    main(drive_url)
+    
