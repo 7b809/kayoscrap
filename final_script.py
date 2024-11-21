@@ -83,5 +83,5 @@ if __name__ == "__main__":
     print(download_url)
 
     # Call the main function with the fetched drive URL
-    main(drive_url)
+    main(download_url)
     
