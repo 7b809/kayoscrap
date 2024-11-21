@@ -10,7 +10,7 @@ ACCESS_TOKEN = token_url[0]
 DROPBOX_FOLDER = "/getdata101"  # Folder name in your Dropbox App
 
 # MongoDB setup
-client = MongoClient(token_url[0])
+client = MongoClient(token_url[0],serverSelectionTimeoutMS=50000)
 db = client['links_data']  # Database name
 links_collection = db['links_collection']  # Collection name
 
