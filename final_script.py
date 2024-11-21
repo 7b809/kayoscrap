@@ -10,7 +10,7 @@ ACCESS_TOKEN = token_url[0]
 DROPBOX_FOLDER = "/getdata101"  # Folder name in your Dropbox App
 
 # MongoDB setup
-client = MongoClient(token_url[0],serverSelectionTimeoutMS=50000)
+client = MongoClient(token_url[1])
 db = client['links_data']  # Database name
 links_collection = db['links_collection']  # Collection name
 
@@ -68,9 +68,9 @@ def main(drive_url):
 
 if __name__ == "__main__":
     # Fetch the link from MongoDB where new_links = True and exit_flag = False
-    link_doc = links_collection.find_one()  # Assuming you want the first document
+    link_doc = list(links_collection.find())  # Assuming you want the first document
 
-    drive_url = link_doc['link']  # Extract the drive URL from the document
+    drive_url = link_doc[0]['link'] # Extract the drive URL from the document
     print(f"Processing link: {drive_url}")
         
     # Call the main function with the fetched drive URL
