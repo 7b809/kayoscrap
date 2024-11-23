@@ -18,10 +18,10 @@ jobs:
       with:
         python-version: '3.12'  # Specify the Python version you want
 
-    - name: Install ffmpeg
-      run: |
-        sudo apt update
-        sudo apt install -y ffmpeg  # Install ffmpeg
+    # - name: Install ffmpeg
+    #   run: |
+    #     sudo apt update
+    #     sudo apt install -y ffmpeg  # Install ffmpeg
 
     - name: Install dependencies
       run: |
@@ -32,4 +32,4 @@ jobs:
       env:
         DROPBOX_ACCESS_TOKEN: ${{ secrets.DROPBOX_ACCESS_TOKEN }}  # Use the GitHub Secret for Dropbox token
       run: |
-        python final_script.py
+        python links.py
